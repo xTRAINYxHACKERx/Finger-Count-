@@ -1,6 +1,6 @@
 git clone https://github.com/ultralytics/yolov5.git
 cd yolov5
 #After Run this in the terminal or cmd....
-pip install -r requirements.txt
+pip install -r requirements.txt(recommended in the Git itself)
  Else if the Model is missing install it manually from the site....
 
