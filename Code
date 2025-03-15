@@ -1,0 +1,43 @@
+import cv2
+import torch
+from yolov5 import YOLOv5
+
+{
+model = YOLOv5("yolov5s.pt", device="cpu")
+cap = cv2.VideoCapture(0)
+
+if cap.isOpened():
+    while True:
+        ret, frame = cap.read()
+        if ret:
+            cv2.imshow("Finger Count - YOLOv5", frame) 
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+        else:
+            print("Error: Could not read frame from webcam.")
+            break
+else:
+    print("Error: Could not open webcam.")
+
+
+results = model.predict(frame, size=640)
+    for result in results.xyxy[0]:
+        x1, y1, x2, y2, conf, cls = result
+        if conf > 0.5:  # Confidence threshold
+            cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+
+
+         
+hand_height = int(y2 - y1)
+fingers = min(max(1, hand_height // 50), 5)
+cv2.putText(frame, f"Fingers: {fingers}", (int(x1), int(y1) - 10),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+
+    cv2.imshow("Finger Count - YOLOv5", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord("q"):  # Press 'q' to exit
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+}
