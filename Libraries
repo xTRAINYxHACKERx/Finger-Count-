@@ -1,3 +1,2 @@
 Libraries to be included
-opencv-python
-install torch 
+opencv-python torch torchvision
